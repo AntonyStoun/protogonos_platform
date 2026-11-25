@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>PROTOGONOS</title>
+<link rel="stylesheet" href="vendor/fonts.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/level1.css">
+<link rel="stylesheet" href="css/level2.css">
+<link rel="stylesheet" href="css/level3.css">
+</head>
+<body data-active-level="1">
+
+<!-- Зернистая плёнка времени поверх всего -->
+<div id="grain" aria-hidden="true"></div>
+
+<!-- Шапка сайта (Уровень 1 и 2) -->
+<header id="site-header" aria-hidden="true">PROTOGONOS</header>
+
+<!-- Оптический колодец: три изолированных слоя (ось Z) -->
+<main id="well">
+
+  <!-- ════════ УРОВЕНЬ 1 — ПОРОГ ════════ -->
+  <section id="level1" class="level" data-level="1">
+    <div class="l1-bg" aria-hidden="true"></div>
+    <div class="l1-glass" aria-hidden="true"></div>
+
+    <div id="l1-clock" class="l1-clock">
+      <div class="l1-clock-window">
+        <svg class="l1-sym l1-sym-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        </svg>
+        <div id="l1-hours" class="l1-digits">--</div>
+      </div>
+      <div class="l1-clock-window">
+        <svg class="l1-sym l1-sym-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15.5 3.2a9 9 0 1 0 5.3 15.6A10.5 10.5 0 0 1 15.5 3.2Z" fill="currentColor"/>
+        </svg>
+        <div id="l1-minutes" class="l1-digits">--</div>
+      </div>
+    </div>
+
+    <!-- Астрономический замок 360° — механизм строится на Этапе 2 -->
+    <div id="lock" class="l1-lock" aria-label="Астрономический замок"></div>
+
+    <p id="l1-hint" class="l1-hint">И ОТДЕЛИЛ ЭЛОХИМ СВЕТ ОТ НОЧИ — ОПОЗИЦИЯ 180</p>
+  </section>
+
+  <!-- ════════ УРОВЕНЬ 2 — ГЛАВНЫЙ ЗАЛ ════════ -->
+  <section id="level2" class="level" data-level="2">
+    <div class="l2-grid" aria-hidden="true"></div>
+
+    <nav id="l2-matrix" class="l2-matrix">
+      <button class="l2-node" data-section="codex">КОДЕКС</button>
+      <button class="l2-node" data-section="projection">ПРОЕКЦИЯ</button>
+      <button class="l2-node" data-section="schematikon">СХЕМАТИКОН</button>
+      <button class="l2-node" data-section="emission">ЭМИССИЯ</button>
+      <button id="l2-core" class="l2-core" aria-label="Вход в ядро">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path d="M24 6 39.6 33H8.4Z" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path d="M24 42 8.4 15h31.2Z" fill="none" stroke="currentColor" stroke-width="1"/>
+          <circle cx="24" cy="24" r="2.4" fill="currentColor"/>
+        </svg>
+      </button>
+    </nav>
+
+    <div id="l2-panel" class="l2-panel"><!-- разделы открываются на Этапе 3 --></div>
+  </section>
+
+  <!-- ════════ УРОВЕНЬ 3 — ЭФФЕКТ НАБЛЮДАТЕЛЯ ════════ -->
+  <section id="level3" class="level" data-level="3">
+    <pre id="l3-terminal" class="l3-terminal"></pre>
+    <div id="l3-omnia" class="l3-omnia">OMNIA LUX EST</div>
+  </section>
+
+</main>
+
+<script src="content/config.js"></script>
+<script src="vendor/marked.min.js"></script>
+<script src="js/observer.js"></script>
+<script src="js/shell.js"></script>
+<script src="js/ambience.js"></script>
+<script src="js/level1.js"></script>
+<script src="js/level2.js"></script>
+<script src="js/level3.js"></script>
+</body>
+</html>

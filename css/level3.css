@@ -1,0 +1,51 @@
+/* ═══════════════════════════════════════════════════════════════
+   level3.css — ЭФФЕКТ НАБЛЮДАТЕЛЯ: терминал вердиктов и саморазбор.
+   ═══════════════════════════════════════════════════════════════ */
+
+#level3 {
+  background: var(--obsidian);
+  flex-direction: column;
+}
+
+/* ── Терминал анализа: строки «печатаются» ──────────────────── */
+.l3-terminal {
+  font-family: "Jura", monospace;
+  font-size: clamp(14px, 1.6vw, 18px);
+  line-height: 1.9;
+  letter-spacing: .08em;
+  color: var(--ink);
+  text-align: left;
+  max-width: 78ch;
+  min-height: 40vh;
+  white-space: pre-wrap;
+  text-shadow: 0 0 10px rgba(216,222,233,.25);
+  transition: opacity 2s ease;
+}
+.l3-terminal .caret { color: var(--brass); animation: caret-blink .9s steps(1) infinite; }
+@keyframes caret-blink { 50% { opacity: 0; } }
+
+.l3-verdict-strong { color: var(--brass); }
+.l3-verdict-weak   { color: #8f9aa8; }
+
+/* ── OMNIA LUX EST: монументальная капиталь ─────────────────── */
+.l3-omnia {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--f-sacred);
+  font-weight: 600;
+  font-size: clamp(26px, 5vw, 64px);
+  letter-spacing: .45em;
+  color: #F2EFE6;
+  text-shadow: 0 0 30px rgba(242,239,230,.5), 0 0 90px rgba(242,239,230,.2);
+  opacity: 0;
+  white-space: nowrap;
+}
+.l3-omnia.reveal { animation: omnia-reveal 2.5s ease forwards; }
+.l3-omnia.fade   { animation: omnia-fade  2.5s ease forwards; }
+@keyframes omnia-reveal { from { opacity: 0; letter-spacing: .30em; } to { opacity: 1; letter-spacing: .45em; } }
+@keyframes omnia-fade   { from { opacity: 1; } to { opacity: 0; } }
+
+/* Финал: чистая тьма, сайт больше не интерфейс */
+body.unmade { background: var(--void); }
+body.unmade #grain { display: none; }
+body.unmade .level { visibility: hidden; opacity: 0; pointer-events: none; }

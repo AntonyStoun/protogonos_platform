@@ -1,0 +1,138 @@
+/* ═══════════════════════════════════════════════════════════════
+   base.css — ОСНОВА: оптический колодец (ось Z), изоляция уровней,
+   зерно времени, шапка, общая палитра «древней сакральности».
+   ═══════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --void:        #050507;   /* абсолютная тьма финала */
+  --obsidian:    #08090C;   /* обсидиан Главного зала */
+  --brass:       #C9A227;   /* латунь / золотая патина */
+  --brass-soft:  rgba(201,162, 39, .42);
+  --silver:      #D8DEE9;   /* холодное серебро Луны */
+  --silver-soft: rgba(216,222,233, .38);
+  --ink:         #E8E4D9;   /* светлый «высеченный» текст */
+  --ink-dim:     rgba(232,228,217, .55);
+  --hairline:    rgba(255,255,255, .04);
+
+  --f-display: "Syncopate", "Jura", sans-serif;      /* кибер-гротеск */
+  --f-sacred:  "Cinzel", "Old Standard TT", serif;   /* античная капиталь */
+  --f-body:    "Cormorant Garamond", "Old Standard TT", serif; /* тело текста */
+
+  --ease-deep: cubic-bezier(.16, .84, .28, 1);
+}
+
+html, body {
+  width: 100vw; height: 100vh;
+  overflow: hidden;                 /* никаких полос прокрутки */
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--f-body);
+}
+
+body { touch-action: manipulation; }
+
+/* ── Оптический колодец ─────────────────────────────────────── */
+#well {
+  position: fixed; inset: 0;
+  width: 100vw; height: 100vh;
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+/* ── АБСОЛЮТНАЯ ИЗОЛЯЦИЯ УРОВНЕЙ ────────────────────────────── */
+.level {
+  position: absolute; inset: 0;
+  width: 100vw; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  /* неактивный уровень: невидим, недоступен, не принимает события */
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(.7) translateZ(-500px);
+}
+
+.level[data-state="active"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1) translateZ(0);
+}
+
+/* Растворение текущего уровня (уходит к камере): 1.2 с */
+.level[data-state="dissolve"] {
+  visibility: visible;
+  animation: level-dissolve 1.2s var(--ease-deep) forwards;
+  pointer-events: none;
+}
+@keyframes level-dissolve {
+  from { opacity: 1; transform: scale(1)    translateZ(0);     visibility: visible; }
+  to   { opacity: 0; transform: scale(1.4)  translateZ(300px); visibility: hidden;  }
+}
+
+/* Выход следующего уровня из глубины: 1.2 с */
+.level[data-state="emerge"] {
+  visibility: visible;
+  animation: level-emerge 1.2s var(--ease-deep) forwards;
+  pointer-events: none;
+}
+@keyframes level-emerge {
+  from { opacity: 0; transform: scale(.7) translateZ(-500px); visibility: visible; }
+  to   { opacity: 1; transform: scale(1)  translateZ(0);      visibility: visible; }
+}
+
+/* ── Зернистая плёнка времени ───────────────────────────────── */
+#grain {
+  position: fixed; inset: -50%;
+  width: 200%; height: 200%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: .07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-drift 9s steps(6) infinite;
+}
+@keyframes grain-drift {
+  0%   { transform: translate(0,0); }
+  20%  { transform: translate(-3%,2%); }
+  40%  { transform: translate(2%,-3%); }
+  60%  { transform: translate(-2%,-2%); }
+  80%  { transform: translate(3%,1%); }
+  100% { transform: translate(0,0); }
+}
+
+/* ── Шапка сайта ────────────────────────────────────────────── */
+#site-header {
+  position: fixed; top: 26px; right: 34px;
+  z-index: 60;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(13px, 1.6vw, 20px);
+  letter-spacing: .25em;
+  white-space: nowrap;
+  color: var(--ink);
+  text-shadow: 0 0 18px var(--brass-soft), 0 0 42px rgba(201,162,39,.18);
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+}
+/* Полное стирание шапки на фазе «снятие оболочки» саморазбора */
+body.unmaking-shell #site-header { opacity: 0 !important; transition: opacity 1s ease; }
+
+/* ── Общие утилиты ──────────────────────────────────────────── */
+.sacred   { font-family: var(--f-sacred); letter-spacing: .12em; }
+.mono-num { font-variant-numeric: tabular-nums; }
+
+/* Режим саморазбора.
+   Фаза 1 (0–2 с): гаснут структуры — сетки, рамки, терминал. */
+body.unmaking-structures .l2-grid,
+body.unmaking-structures .l3-terminal { opacity: 0 !important; transition: opacity 2s ease; }
+body.unmaking-structures #grain { opacity: .02; transition: opacity 2s ease; }
+
+/* Фаза 2 (2–4 с): снимается оболочка — заголовок, узлы, всё веб-подобное */
+body.unmaking-shell #site-header,
+body.unmaking-shell .l2-matrix,
+body.unmaking-shell .l2-panel,
+body.unmaking-shell .l2-core { opacity: 0 !important; pointer-events: none; transition: opacity 1.8s ease; }
